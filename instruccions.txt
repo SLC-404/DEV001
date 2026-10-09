@@ -1,3 +1,4 @@
+------------------------------------------------------------------------------------------------------>  LARAVEL <------------------------------------------------------------------------------------------------------
 \\ Instalar el proyecto de laravel
 ----------------------------------> laravel new dev001-api
 \\ Configurar la db
@@ -13,3 +14,14 @@
 ----------------------------------> php artisan install:api
 \\ Instalamos Spatie
 ----------------------------------> composer require spatie/laravel-permission
+
+
+------------------------------------------------------------------------------------------------------>  REACT <------------------------------------------------------------------------------------------------------
+\\ Instalar el proyecto de REACT
+----------------------------------> npm create vite@latest dev001-web -- --template react
+\\ Instalar librerias de Tailwindcss
+----------------------------------> npm install tailwindcss @tailwindcss/vite
+\\ Instalación de librerias de componentes
+----------------------------------> npx shadcn@latest init
+\\ Importa mas componentes
+----------------------------------> npx shadcn@latest add card input label 
