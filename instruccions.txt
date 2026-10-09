@@ -11,3 +11,5 @@
 ----------------------------------> php artisan migrate
 \\ Instalamos Sactum
 ----------------------------------> php artisan install:api
+\\ Instalamos Spatie
+----------------------------------> composer require spatie/laravel-permission
