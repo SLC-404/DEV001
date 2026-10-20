@@ -25,3 +25,5 @@
 ----------------------------------> npx shadcn@latest init
 \\ Importa mas componentes
 ----------------------------------> npx shadcn@latest add card input label 
+\\ Instalar axios
+----------------------------------> npm install axios react-router
