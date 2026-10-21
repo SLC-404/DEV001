@@ -45,7 +45,7 @@ export default function Login() {
   }
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
+    <div className="animate-regresar grid min-h-screen lg:grid-cols-2">
       {/* Panel izquierdo: marca (solo en pantallas grandes) */}
       <aside className="relative hidden overflow-hidden bg-linear-to-br from-green-700 via-green-800 to-emerald-950 p-12 text-white lg:flex lg:flex-col lg:justify-between">
         <div className="absolute -top-24 -right-24 size-72 rounded-full bg-white/10" />
