@@ -18,13 +18,30 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
   const [verPassword, setVerPassword] = useState(false);
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const {login}=useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [enviando,setEnviando] =useState(false);
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     e.preventDefault();
-    await login(email,password);
+    setError("");
+    setEnviando(true);
+    try {
+      await login(email, password);
+    } catch (err) {
+      const status = err.response?.status;
+      if (status === 422) {
+        setError("Las credenciales no son correctas");
+      } else if (status === 429) {
+        setError("Demasiados intentos. Espera un minuto");
+      } else {
+        setError("No se puede conectar con el servidor.");
+      }
+    } finally{
+      setEnviando(false);
+    }
   }
 
   return (
@@ -65,13 +82,14 @@ export default function Login() {
           </ul>
         </div>
 
-        <p className="relative text-sm text-green-100/70">© 2026 DEV001 · César Segura</p>
+        <p className="relative text-sm text-green-100/70">
+          © 2026 DEV001 · César Segura
+        </p>
       </aside>
 
       {/* Panel derecho: formulario */}
       <main className="flex items-center justify-center bg-muted p-6">
         <div className="w-full max-w-sm">
-
           <div className="rounded-2xl border bg-background p-8 shadow-xl shadow-green-900/5">
             <h1 className="text-2xl font-bold text-gray-900">Bienvenido</h1>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -79,13 +97,18 @@ export default function Login() {
             </p>
 
             <form className="mt-8 flex flex-col gap-5" onSubmit={handleSubmit}>
+              {error && (
+                <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
               <div className="flex flex-col gap-2">
                 <Label htmlFor="email">Correo</Label>
                 <div className="relative">
                   <Mail className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     value={email}
-                    onChange={(e)=>setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     name="email"
                     type="email"
@@ -98,7 +121,10 @@ export default function Login() {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Contraseña</Label>
-                  <a href="#" className="text-xs font-medium text-green-700 hover:underline">
+                  <a
+                    href="#"
+                    className="text-xs font-medium text-green-700 hover:underline"
+                  >
                     ¿Olvidaste tu contraseña?
                   </a>
                 </div>
@@ -106,7 +132,7 @@ export default function Login() {
                   <Lock className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     value={password}
-                    onChange={(e)=>setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     name="password"
                     type={verPassword ? "text" : "password"}
@@ -117,25 +143,35 @@ export default function Login() {
                     type="button"
                     onClick={() => setVerPassword(!verPassword)}
                     className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-md p-1 text-muted-foreground transition-colors hover:text-gray-900"
-                    aria-label={verPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    aria-label={
+                      verPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                    }
                   >
-                    {verPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                    {verPassword ? (
+                      <EyeOff className="size-4" />
+                    ) : (
+                      <Eye className="size-4" />
+                    )}
                   </button>
                 </div>
               </div>
 
               <Button
                 type="submit"
+                disabled={enviando}
                 className="group mt-2 h-10 w-full bg-green-700 text-white hover:bg-green-800"
               >
-                Acceder
+                {enviando ? "Entrando..." : "Acceder"}
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </form>
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
               ¿No tienes cuenta?{" "}
-              <Link to="/register" className="font-semibold text-green-700 hover:underline">
+              <Link
+                to="/register"
+                className="font-semibold text-green-700 hover:underline"
+              >
                 Regístrate
               </Link>
             </p>

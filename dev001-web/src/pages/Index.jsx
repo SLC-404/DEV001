@@ -6,8 +6,8 @@ function Index() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted p-6">
-      <Button onClick={logout}>Cerrar sesión</Button>
+    <>
+    <div className="animate-entrar flex min-h-screen items-center justify-center bg-muted p-6">
       <div className="w-full max-w-md rounded-2xl border bg-background p-8 text-center shadow-xl shadow-green-900/5">
         
         <ShieldCheck className="mx-auto size-10 text-green-700" />
@@ -28,6 +28,7 @@ function Index() {
         </Button>
       </div>
     </div>
+    </>
   );
 }
 
